@@ -57,11 +57,15 @@
 
                             <router-link class="nav-link" to="/">
                                 <div class="sb-nav-link-icon text-white"><i class="fas fa-tachometer-alt"></i></div>
-                                <b> Dashboard </b>
+                                Dashboard
                             </router-link>
-                            <router-link class="nav-link bg-danger" to="/product">
+                            <router-link class="nav-link" to="/product">
+                                <div class="sb-nav-link-icon text-white border-bottom-3"><i class="fas fa-tachometer-alt"></i></div>
+                                Product
+                            </router-link>
+                            <router-link class="nav-link" to="/digitalLab">
                                 <div class="sb-nav-link-icon text-white"><i class="fas fa-tachometer-alt"></i></div>
-                                <b> Product </b>
+                                DigitalLab
                             </router-link>
 
                     <!--------------invoice----------->

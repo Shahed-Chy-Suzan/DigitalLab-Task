@@ -5,7 +5,7 @@
             <li class="breadcrumb-item">
                 <a href="#">DigitalLab</a>
             </li>
-            <li class="breadcrumb-item active">Product Sale and Calculation</li>
+            <li class="breadcrumb-item active">Product / Product Sale and Calculation</li>
         </ol>
 
         <div class="row mb-4">
@@ -141,9 +141,6 @@
             Reload.$on('AfterAdd', ()=>{        //--------3.2--
                 this.cartProduct();
             });
-            Reload.$on('customerReload',()=>{   //--added by me
-                this.allCustomer();
-            })
         },
         data(){
             return{

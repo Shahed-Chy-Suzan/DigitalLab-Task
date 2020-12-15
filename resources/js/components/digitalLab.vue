@@ -1,0 +1,221 @@
+
+<template>
+    <div>
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb mt-3">
+            <li class="breadcrumb-item">
+                <a href="#">DigitalLab</a>
+            </li>
+            <li class="breadcrumb-item active">Product / Product Sale and Calculation</li>
+        </ol>
+
+        <div class="row mb-4">
+    <!--------------------------Left_Side_"Expense Insert"------------2nd_task----------->
+            <div class="card col-lg-6 border-primary shadow">
+                <div class="card-header text-primary">
+                    <i class="fas fa-chart-area"></i>
+                    <b>Expense Details</b>
+                </div>
+
+                <div class="card-body">
+                    <table class="table table-sm table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Qty</th>
+                            <th scope="col">Price/Unit</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>                 <!------Expense_Insert_Table(Top_Left)--------->
+                        <tr v-for="card in cards" :key="card.id">       <!-------pos_table---------3----->
+                            <th>{{ card.product_name }}</th>
+                            <td><input type="number" min="1" style="width: 40px;" v-model="quantity" required>
+                            </td>
+                            <!-- <td>{{ card.product_price }}</td> -->
+                            <td><input type="number" min="1" style="width: 70px;" v-model="card.product_price" required>
+                            </td>
+                            <td>{{ card.product_price*quantity }}</td>
+                            <td><a @click="removeProduct(card.id)" class="btn btn-sm btn-danger text-white">x</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                </div>
+                <div class="card-footer">       <!-----Expense_Insert_Table(Middle_Left)------->
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Total Quantity:
+                            <strong>{{ quantity }}</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Sub Total:
+                            <strong>{{ this.item.product_price*quantity }} Tk</strong>
+                            <!-- <strong>{{ subtotal }} Tk</strong> -->
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Discount:
+                            <strong> <input type="number" min="0" style="width: 45px;" v-model="discount"> <span>%</span> </strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Discount Price:
+                            <strong> {{ (this.item.product_price*quantity)*discount/100 }} Tk</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Total:
+                            <!-- <strong> {{ subtotal*vats.vat /100 +subtotal }} Tk</strong> -->
+                            <strong> {{ (this.item.product_price*quantity)-((this.item.product_price*quantity)*discount/100) }} Tk</strong>
+                        </li>
+                    </ul>
+                    <br>                   <!-----Expense_Insert_Table(Bottom_Left)------>
+                    <form @submit.prevent="orderdone">
+                        <label>Paying Amount</label>
+                        <input type="text" class="form-control" required v-model="pay">
+
+                        <label>Due</label>
+                        <!-- <input type="text" class="form-control" required v-model="due"> -->
+                        <input type="text" class="form-control" required :value="(((this.item.product_price*quantity)-((this.item.product_price*quantity)*discount/100)) - pay).toFixed(2)">
+
+                        <label>Pay By</label>
+                        <select class="form-control" v-model="payby">
+                            <option value="HandCash">Hand Cash</option>
+                            <option value="Cheaque">Cheaque</option>
+                            <option value="GiftCard">Gift Card</option>
+                        </select>
+
+                        <br>
+                        <button type="submit" class="btn btn-success mb-4">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+
+<!--------------Right_Side_"Product"----------1st_task----------1----->
+            <div class="card col-lg-6 border-primary">
+                <div class="card-header text-primary">
+                    <i class="fas fa-chart-area"></i>
+                    <b>Products</b>
+                </div>
+
+                <div class="card-body">             <!----------------------------->
+                    <div class="mb-5 pb-5 mt-2">
+                        <vue-suggestion :items="items"
+                                v-model="item"
+                                :setLabel="setLabel"
+                                :itemTemplate="itemTemplate"
+                                @changed="inputChange"
+                                @selected="itemSelected">
+                        </vue-suggestion>
+
+                        <!-- <div v-if="item && item.id">
+                            <p>Selected item:</p>
+                            <code>{{ item }}</code>
+                        </div> -->
+                    </div>
+                    <!-- <div class="tab-content mt-5" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
+                            <input type="text" v-model="searchTerm" class="form-control" placeholder="Search with Product Name..."><br>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-6" v-for="product in filtersearch" :key="product.id">
+                                    <button class="btn btn-sm" @click.prevent="AddToCart(product.id)">
+                                        <div class="card border-primary shadow-sm" style="width: 9rem; height: 130px;">
+                                            <div class="card-body">
+                                                <span class="card-title font-weight-bolder">{{ product.product_name }}</span><br>
+                                                <span class="text-primary d-block m-0 pt-3"> BDT: {{product.product_price}}</span>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <!-- Icon Cards-->
+    </div>
+</template>
+
+
+<script>
+import itemTemplate from './item-template.vue';
+    export default {
+        created(){
+            this.newAllProduct();           //----------------------------------//------
+        },
+        data(){
+            return{
+                quantity: 1,
+                editedIndex: -1,
+                pay:'',
+                discount:'',
+                payby:'',
+                cards:[],                   //--------2.2--
+
+                item: {},   //-----------------------------------------------------//----
+                items: [],
+                itemTemplate,
+            }
+        },
+        methods:{
+            newAllProduct(){                               //---------------------------//------------
+                axios.get('/product')
+                    .then(({data}) => (this.items = data))
+                    .catch()
+            },
+            itemSelected (item) {
+                this.item = item;
+                this.cards.push(item);
+                // this.newAllProduct();
+            },
+            setLabel (item) {
+                return item.product_name;
+            },
+            inputChange (text) {
+                // your search method
+                // this.items = items.filter(item => item.name.contains(text));
+
+                this.items = this.items.filter(item => (new RegExp(text.toLowerCase())).test(item.product_name.toLowerCase()));
+
+                // this.newAllProduct();
+                // now `items` will be showed in the suggestion list
+            },
+            removeProduct(id){
+                this.editedIndex = this.cards.indexOf(id)
+                this.cards.splice(this.editedIndex, 1)
+                this.cards = []
+                this.item = {}
+                this.discount = ''
+                this.quantity = ''
+            },
+
+            orderdone(){
+                let subtotal = this.item.product_price*this.quantity
+                let total = subtotal-(subtotal*this.discount/100)
+                let due = ((subtotal-(subtotal*this.discount/100)) - this.pay).toFixed(2);  //variable.toFixed(2)=take 2 specified decimal number
+                var data = {
+                    qty: this.quantity,
+                    sub_total: subtotal,
+                    discount: this.discount,
+                    pay_by: this.payby,
+                    deposit: this.pay,
+                    due: due,
+                    total: total
+                }       //due:this.due //due_dynamic
+
+                axios.post('/orderdone/',data)
+                .then(()=>{
+                    this.$router.push({ name: 'invoice'})
+                })
+            },
+
+        },
+    }
+</script>
+
+
+<style scoped>
+
+</style>

@@ -9,7 +9,11 @@ Vue.use(VueRouter)
 //------Reload-----
 window.Reload = new Vue();
 
+//----Vue-suggestion------
+import VueSuggestion from 'vue-suggestion'
+Vue.use(VueSuggestion)
 
+//------routes-------
 import {routes} from './routes';
 
 const router = new VueRouter({

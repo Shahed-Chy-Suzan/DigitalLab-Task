@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -69,5 +69,8 @@ class CartController extends Controller
         return response('done');
     }
 //----------------------------------------------------------
+    public function index(){
+        return view("welcome");
+    }
 
 }
