@@ -2032,24 +2032,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
@@ -2057,7 +2039,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      quantity: 1,
       editedIndex: -1,
       pay: '',
       discount: '',
@@ -2069,6 +2050,26 @@ __webpack_require__.r(__webpack_exports__);
       items: [],
       itemTemplate: _item_template_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
     };
+  },
+  computed: {
+    totalQuantity: function totalQuantity() {
+      var sum = 0;
+
+      for (var i = 0; i < this.cards.length; i++) {
+        sum += parseFloat(this.cards[i].product_quantity);
+      }
+
+      return sum;
+    },
+    subtotal: function subtotal() {
+      var sum = 0;
+
+      for (var i = 0; i < this.cards.length; i++) {
+        sum += this.quantity * parseFloat(this.cards[i].product_price);
+      }
+
+      return sum;
+    }
   },
   methods: {
     newAllProduct: function newAllProduct() {
@@ -2096,12 +2097,18 @@ __webpack_require__.r(__webpack_exports__);
       // now `items` will be showed in the suggestion list
     },
     removeProduct: function removeProduct(id) {
-      this.editedIndex = this.cards.indexOf(id);
-      this.cards.splice(this.editedIndex, 1);
-      this.cards = [];
-      this.item = {};
-      this.discount = '';
-      this.quantity = '';
+      // this.editedIndex = this.cards.indexOf(id)
+      // console.log(this.cards.indexOf(id));
+      console.log(id);
+      var index = this.items.findIndex(function (element, index) {
+        if (element.product_name === 'id') {
+          return true;
+        }
+      });
+      console.log(index); // this.cards.splice(this.editedIndex, 1)
+      // // this.cards = []
+      // // this.item = {}
+      // this.discount = ''
     },
     orderdone: function orderdone() {
       var _this2 = this;
@@ -39024,19 +39031,23 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.quantity,
-                          expression: "quantity"
+                          value: card.product_quantity,
+                          expression: "card.product_quantity"
                         }
                       ],
                       staticStyle: { width: "40px" },
                       attrs: { type: "number", min: "1", required: "" },
-                      domProps: { value: _vm.quantity },
+                      domProps: { value: card.product_quantity },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.quantity = $event.target.value
+                          _vm.$set(
+                            card,
+                            "product_quantity",
+                            $event.target.value
+                          )
                         }
                       }
                     })
@@ -39066,7 +39077,9 @@ var render = function() {
                     })
                   ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(card.product_price * _vm.quantity))]),
+                  _c("td", [
+                    _vm._v(_vm._s(card.product_price * card.product_quantity))
+                  ]),
                   _vm._v(" "),
                   _c("td", [
                     _c(
@@ -39075,7 +39088,7 @@ var render = function() {
                         staticClass: "btn btn-sm btn-danger text-white",
                         on: {
                           click: function($event) {
-                            return _vm.removeProduct(card.id)
+                            return _vm.removeProduct(card.product_name)
                           }
                         }
                       },
@@ -39103,7 +39116,7 @@ var render = function() {
                 _vm._v(
                   "\n                            Total Quantity:\n                            "
                 ),
-                _c("strong", [_vm._v(_vm._s(_vm.quantity))])
+                _c("strong", [_vm._v(_vm._s(_vm.totalQuantity))])
               ]
             ),
             _vm._v(" "),
@@ -39117,9 +39130,7 @@ var render = function() {
                 _vm._v(
                   "\n                            Sub Total:\n                            "
                 ),
-                _c("strong", [
-                  _vm._v(_vm._s(this.item.product_price * _vm.quantity) + " Tk")
-                ])
+                _c("strong", [_vm._v(_vm._s(_vm.subtotal) + " Tk")])
               ]
             ),
             _vm._v(" "),

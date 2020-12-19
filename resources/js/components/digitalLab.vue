@@ -31,13 +31,13 @@
                         <tbody>                 <!------Expense_Insert_Table(Top_Left)--------->
                         <tr v-for="card in cards" :key="card.id">       <!-------pos_table---------3----->
                             <th>{{ card.product_name }}</th>
-                            <td><input type="number" min="1" style="width: 40px;" v-model="quantity" required>
+                            <td><input type="number" min="1" style="width: 40px;" v-model="card.product_quantity" required>
                             </td>
                             <!-- <td>{{ card.product_price }}</td> -->
                             <td><input type="number" min="1" style="width: 70px;" v-model="card.product_price" required>
                             </td>
-                            <td>{{ card.product_price*quantity }}</td>
-                            <td><a @click="removeProduct(card.id)" class="btn btn-sm btn-danger text-white">x</a></td>
+                            <td>{{ card.product_price*card.product_quantity }}</td>
+                            <td><a @click="removeProduct(card.product_name)" class="btn btn-sm btn-danger text-white">x</a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -47,11 +47,11 @@
                     <ul class="list-group">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Total Quantity:
-                            <strong>{{ quantity }}</strong>
+                            <strong>{{ totalQuantity }}</strong>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Sub Total:
-                            <strong>{{ this.item.product_price*quantity }} Tk</strong>
+                            <strong>{{ subtotal }} Tk</strong>
                             <!-- <strong>{{ subtotal }} Tk</strong> -->
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -113,24 +113,6 @@
                             <code>{{ item }}</code>
                         </div> -->
                     </div>
-                    <!-- <div class="tab-content mt-5" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-
-                            <input type="text" v-model="searchTerm" class="form-control" placeholder="Search with Product Name..."><br>
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-6" v-for="product in filtersearch" :key="product.id">
-                                    <button class="btn btn-sm" @click.prevent="AddToCart(product.id)">
-                                        <div class="card border-primary shadow-sm" style="width: 9rem; height: 130px;">
-                                            <div class="card-body">
-                                                <span class="card-title font-weight-bolder">{{ product.product_name }}</span><br>
-                                                <span class="text-primary d-block m-0 pt-3"> BDT: {{product.product_price}}</span>
-                                            </div>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -147,7 +129,6 @@ import itemTemplate from './item-template.vue';
         },
         data(){
             return{
-                quantity: 1,
                 editedIndex: -1,
                 pay:'',
                 discount:'',
@@ -158,6 +139,22 @@ import itemTemplate from './item-template.vue';
                 items: [],
                 itemTemplate,
             }
+        },
+        computed:{
+            totalQuantity(){
+                let sum=0;
+                for(let i=0; i < this.cards.length; i++ ){
+                    sum += (parseFloat(this.cards[i].product_quantity));
+                }
+                return sum;
+            },
+            subtotal(){
+                let sum=0;
+                for(let i=0; i < this.cards.length; i++){
+                    sum += (this.quantity) * parseFloat(this.cards[i].product_price);
+                }
+                return sum;
+            },
         },
         methods:{
             newAllProduct(){                               //---------------------------//------------
@@ -183,14 +180,20 @@ import itemTemplate from './item-template.vue';
                 // now `items` will be showed in the suggestion list
             },
             removeProduct(id){
-                this.editedIndex = this.cards.indexOf(id)
-                this.cards.splice(this.editedIndex, 1)
-                this.cards = []
-                this.item = {}
-                this.discount = ''
-                this.quantity = ''
+                // this.editedIndex = this.cards.indexOf(id)
+                // console.log(this.cards.indexOf(id));
+                console.log(id);
+                var index = this.items.findIndex((element, index) => {
+                    if (element.product_name === 'id') {
+                        return true
+                    }
+                })
+                console.log(index);
+                // this.cards.splice(this.editedIndex, 1)
+                // // this.cards = []
+                // // this.item = {}
+                // this.discount = ''
             },
-
             orderdone(){
                 let subtotal = this.item.product_price*this.quantity
                 let total = subtotal-(subtotal*this.discount/100)

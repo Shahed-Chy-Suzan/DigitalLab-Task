@@ -1,0 +1,8 @@
+
+(1) items = [] --->> all product are storing in it, (fetching from DB)--->> code is in "inputChange (text) in methods " 
+(2) item = {} --->> storing product info here after seleteing a product by searching--->>code is in "itemSelected (item) in methods"
+(3) cards = [] --->> all selected products are pushing here to display on the left side table(Expense Details table).
+
+
+//-- https://vuejsexamples.com/suggestion-list-input-for-vue-js/
+//-- https://github.com/iamstevendao/vue-suggestion
