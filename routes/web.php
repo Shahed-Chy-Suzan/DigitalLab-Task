@@ -12,14 +12,17 @@ Route::get('/', function () {
 // })->where('vue_capture', '[\/\w\.-]*');
 
 
+Route::get('/product','ProductController@index');           //--Product
+Route::post('/orderdone','PosController@OrderDone');        //--Order_Done
+Route::get('/invoice','PosController@index');               //--Product
 
-Route::get('/product','ProductController@index');               //--Product
+
+
 Route::get('/addTocart/{id}','CartController@AddToCart');       //--Cart
 Route::get('/cart/product','CartController@CartProduct');
 Route::get('/remove/cart/{id}','CartController@removeCart');
 Route::get('/increment/{id}','CartController@Increment');
 Route::get('/decrement/{id}','CartController@Decrement');
 
-Route::post('/orderdone','PosController@OrderDone');      //--Order_Done
 
-Route::get('/invoice','PosController@index');               //--Product
+

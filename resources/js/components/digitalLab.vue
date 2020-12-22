@@ -11,7 +11,7 @@
 
         <div class="row mb-4">
     <!--------------------------Left_Side_"Expense Insert"------------2nd_task----------->
-            <div class="card col-lg-6 border-primary shadow">
+            <div class="card col-lg-7 border-primary shadow">
                 <div class="card-header text-primary">
                     <i class="fas fa-chart-area"></i>
                     <b>Expense Details</b>
@@ -21,6 +21,7 @@
                     <table class="table table-sm table-striped">
                         <thead>
                         <tr>
+                            <th scope="col">Sl No</th>
                             <th scope="col">Name</th>
                             <th scope="col">Qty</th>
                             <th scope="col">Price/Unit</th>
@@ -29,7 +30,8 @@
                         </tr>
                         </thead>
                         <tbody>                 <!------Expense_Insert_Table(Top_Left)--------->
-                        <tr v-for="card in cards" :key="card.id">       <!-------pos_table---------3----->
+                        <tr v-for="(card,index) in cards" :key="card.id">       <!-------pos_table---------3----->
+                            <td> {{index+1}} </td>
                             <th>{{ card.product_name }}</th>
                             <td><input type="number" min="1" style="width: 40px;" v-model="card.product_quantity" required>
                             </td>
@@ -37,7 +39,7 @@
                             <td><input type="number" min="1" style="width: 70px;" v-model="card.product_price" required>
                             </td>
                             <td>{{ card.product_price*card.product_quantity }}</td>
-                            <td><a @click="removeProduct(card.product_name)" class="btn btn-sm btn-danger text-white">x</a></td>
+                            <td><a @click="removeProduct(index)" class="btn btn-sm btn-danger text-white">x</a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -60,12 +62,12 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Discount Price:
-                            <strong> {{ (this.item.product_price*quantity)*discount/100 }} Tk</strong>
+                            <strong> {{ (subtotal*discount)/100 }} Tk</strong>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Total:
                             <!-- <strong> {{ subtotal*vats.vat /100 +subtotal }} Tk</strong> -->
-                            <strong> {{ (this.item.product_price*quantity)-((this.item.product_price*quantity)*discount/100) }} Tk</strong>
+                            <strong> {{ subtotal-(subtotal*discount)/100 }} Tk</strong>
                         </li>
                     </ul>
                     <br>                   <!-----Expense_Insert_Table(Bottom_Left)------>
@@ -75,7 +77,7 @@
 
                         <label>Due</label>
                         <!-- <input type="text" class="form-control" required v-model="due"> -->
-                        <input type="text" class="form-control" required :value="(((this.item.product_price*quantity)-((this.item.product_price*quantity)*discount/100)) - pay).toFixed(2)">
+                        <input type="text" class="form-control" required :value="((subtotal-(subtotal*discount)/100) - pay).toFixed(2)">
 
                         <label>Pay By</label>
                         <select class="form-control" v-model="payby">
@@ -92,7 +94,7 @@
 
 
 <!--------------Right_Side_"Product"----------1st_task----------1----->
-            <div class="card col-lg-6 border-primary">
+            <div class="card col-lg-5 border-primary">
                 <div class="card-header text-primary">
                     <i class="fas fa-chart-area"></i>
                     <b>Products</b>
@@ -129,7 +131,6 @@ import itemTemplate from './item-template.vue';
         },
         data(){
             return{
-                editedIndex: -1,
                 pay:'',
                 discount:'',
                 payby:'',
@@ -151,9 +152,10 @@ import itemTemplate from './item-template.vue';
             subtotal(){
                 let sum=0;
                 for(let i=0; i < this.cards.length; i++){
-                    sum += (this.quantity) * parseFloat(this.cards[i].product_price);
+                    sum += (this.cards[i].product_quantity)*parseFloat(this.cards[i].product_price);
                 }
                 return sum;
+                //--or use "reduce()" js_function here
             },
         },
         methods:{
@@ -165,7 +167,6 @@ import itemTemplate from './item-template.vue';
             itemSelected (item) {
                 this.item = item;
                 this.cards.push(item);
-                // this.newAllProduct();
             },
             setLabel (item) {
                 return item.product_name;
@@ -179,27 +180,15 @@ import itemTemplate from './item-template.vue';
                 // this.newAllProduct();
                 // now `items` will be showed in the suggestion list
             },
-            removeProduct(id){
-                // this.editedIndex = this.cards.indexOf(id)
-                // console.log(this.cards.indexOf(id));
-                console.log(id);
-                var index = this.items.findIndex((element, index) => {
-                    if (element.product_name === 'id') {
-                        return true
-                    }
-                })
-                console.log(index);
-                // this.cards.splice(this.editedIndex, 1)
-                // // this.cards = []
-                // // this.item = {}
-                // this.discount = ''
+            removeProduct(index){
+                this.cards.splice(index, 1)
             },
             orderdone(){
-                let subtotal = this.item.product_price*this.quantity
-                let total = subtotal-(subtotal*this.discount/100)
-                let due = ((subtotal-(subtotal*this.discount/100)) - this.pay).toFixed(2);  //variable.toFixed(2)=take 2 specified decimal number
+                let subtotal = this.subtotal
+                let total = subtotal-(subtotal*this.discount)/100
+                let due = (total - this.pay).toFixed(2);  //variable.toFixed(2)=take 2 specified decimal number
                 var data = {
-                    qty: this.quantity,
+                    qty: this.totalQuantity,
                     sub_total: subtotal,
                     discount: this.discount,
                     pay_by: this.payby,

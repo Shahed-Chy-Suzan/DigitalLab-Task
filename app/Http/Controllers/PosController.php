@@ -15,7 +15,7 @@ class PosController extends Controller
         // $data['product_id']=$request->product_id;
         $data['qty']=$request->qty;
         $data['sub_total']=$request->sub_total;
-        $data['vat']=$request->vat;
+        // $data['vat']=$request->vat;
         $data['discount']=$request->discount;
         $data['total']=$request->total;
         $data['pay_by']=$request->pay_by;
@@ -44,6 +44,7 @@ class PosController extends Controller
         // }
 
         // DB::table('pos')->delete();
+
         return response('done');
     }
 

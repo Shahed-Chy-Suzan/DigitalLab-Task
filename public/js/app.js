@@ -2032,6 +2032,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
@@ -2039,7 +2041,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      editedIndex: -1,
       pay: '',
       discount: '',
       payby: '',
@@ -2065,10 +2066,10 @@ __webpack_require__.r(__webpack_exports__);
       var sum = 0;
 
       for (var i = 0; i < this.cards.length; i++) {
-        sum += this.quantity * parseFloat(this.cards[i].product_price);
+        sum += this.cards[i].product_quantity * parseFloat(this.cards[i].product_price);
       }
 
-      return sum;
+      return sum; //--or use "reduce()" js_function here
     }
   },
   methods: {
@@ -2083,7 +2084,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     itemSelected: function itemSelected(item) {
       this.item = item;
-      this.cards.push(item); // this.newAllProduct();
+      this.cards.push(item);
     },
     setLabel: function setLabel(item) {
       return item.product_name;
@@ -2096,29 +2097,18 @@ __webpack_require__.r(__webpack_exports__);
       }); // this.newAllProduct();
       // now `items` will be showed in the suggestion list
     },
-    removeProduct: function removeProduct(id) {
-      // this.editedIndex = this.cards.indexOf(id)
-      // console.log(this.cards.indexOf(id));
-      console.log(id);
-      var index = this.items.findIndex(function (element, index) {
-        if (element.product_name === 'id') {
-          return true;
-        }
-      });
-      console.log(index); // this.cards.splice(this.editedIndex, 1)
-      // // this.cards = []
-      // // this.item = {}
-      // this.discount = ''
+    removeProduct: function removeProduct(index) {
+      this.cards.splice(index, 1);
     },
     orderdone: function orderdone() {
       var _this2 = this;
 
-      var subtotal = this.item.product_price * this.quantity;
+      var subtotal = this.subtotal;
       var total = subtotal - subtotal * this.discount / 100;
-      var due = (subtotal - subtotal * this.discount / 100 - this.pay).toFixed(2); //variable.toFixed(2)=take 2 specified decimal number
+      var due = (total - this.pay).toFixed(2); //variable.toFixed(2)=take 2 specified decimal number
 
       var data = {
-        qty: this.quantity,
+        qty: this.totalQuantity,
         sub_total: subtotal,
         discount: this.discount,
         pay_by: this.payby,
@@ -39012,7 +39002,7 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "row mb-4" }, [
-      _c("div", { staticClass: "card col-lg-6 border-primary shadow" }, [
+      _c("div", { staticClass: "card col-lg-7 border-primary shadow" }, [
         _vm._m(1),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
@@ -39021,8 +39011,10 @@ var render = function() {
             _vm._v(" "),
             _c(
               "tbody",
-              _vm._l(_vm.cards, function(card) {
+              _vm._l(_vm.cards, function(card, index) {
                 return _c("tr", { key: card.id }, [
+                  _c("td", [_vm._v(" " + _vm._s(index + 1) + " ")]),
+                  _vm._v(" "),
                   _c("th", [_vm._v(_vm._s(card.product_name))]),
                   _vm._v(" "),
                   _c("td", [
@@ -39088,7 +39080,7 @@ var render = function() {
                         staticClass: "btn btn-sm btn-danger text-white",
                         on: {
                           click: function($event) {
-                            return _vm.removeProduct(card.product_name)
+                            return _vm.removeProduct(index)
                           }
                         }
                       },
@@ -39184,14 +39176,7 @@ var render = function() {
                 ),
                 _c("strong", [
                   _vm._v(
-                    " " +
-                      _vm._s(
-                        (this.item.product_price *
-                          _vm.quantity *
-                          _vm.discount) /
-                          100
-                      ) +
-                      " Tk"
+                    " " + _vm._s((_vm.subtotal * _vm.discount) / 100) + " Tk"
                   )
                 ])
               ]
@@ -39212,11 +39197,7 @@ var render = function() {
                   _vm._v(
                     " " +
                       _vm._s(
-                        this.item.product_price * _vm.quantity -
-                          (this.item.product_price *
-                            _vm.quantity *
-                            _vm.discount) /
-                            100
+                        _vm.subtotal - (_vm.subtotal * _vm.discount) / 100
                       ) +
                       " Tk"
                   )
@@ -39269,9 +39250,8 @@ var render = function() {
                 attrs: { type: "text", required: "" },
                 domProps: {
                   value: (
-                    this.item.product_price * _vm.quantity -
-                    (this.item.product_price * _vm.quantity * _vm.discount) /
-                      100 -
+                    _vm.subtotal -
+                    (_vm.subtotal * _vm.discount) / 100 -
                     _vm.pay
                   ).toFixed(2)
                 }
@@ -39337,7 +39317,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card col-lg-6 border-primary" }, [
+      _c("div", { staticClass: "card col-lg-5 border-primary" }, [
         _vm._m(3),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
@@ -39399,6 +39379,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Sl No")]),
+        _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Qty")]),
