@@ -2034,10 +2034,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
-    this.newAllProduct(); //----------------------------------//------
+    this.newAllProduct();
   },
   data: function data() {
     return {
@@ -2045,11 +2046,10 @@ __webpack_require__.r(__webpack_exports__);
       discount: '',
       payby: '',
       cards: [],
-      //--------2.2--
       item: {},
-      //-----------------------------------------------------//----
       items: [],
-      itemTemplate: _item_template_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+      itemTemplate: _item_template_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+      allProduct: null
     };
   },
   computed: {
@@ -2076,10 +2076,9 @@ __webpack_require__.r(__webpack_exports__);
     newAllProduct: function newAllProduct() {
       var _this = this;
 
-      //---------------------------//------------
       axios.get('/product').then(function (_ref) {
         var data = _ref.data;
-        return _this.items = data;
+        return _this.allProduct = data;
       })["catch"]();
     },
     itemSelected: function itemSelected(item) {
@@ -2092,10 +2091,9 @@ __webpack_require__.r(__webpack_exports__);
     inputChange: function inputChange(text) {
       // your search method
       // this.items = items.filter(item => item.product_name.contains(text));
-      this.items = this.items.filter(function (item) {
+      this.items = this.allProduct.filter(function (item) {
         return new RegExp(text.toLowerCase()).test(item.product_name.toLowerCase());
-      }); // this.newAllProduct();
-      // now `items` will be showed in the suggestion list
+      }); // now `items` will be showed in the suggestion list
     },
     removeProduct: function removeProduct(index) {
       this.cards.splice(index, 1);
@@ -2174,13 +2172,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       item: {},
-      items: [// { id: 1, name: 'Golden Retriever'},
-        // { id: 2, name: 'Cat'},
-        // { id: 3, name: 'Squirrel'},
-        // { id: 4, name: 'aaaaaa'},
-        // { id: 5, name: 'a'},
-        // { id: 6, name: 'aa'},
-      ],
+      items: [],
       itemTemplate: _item_template_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
     };
   },

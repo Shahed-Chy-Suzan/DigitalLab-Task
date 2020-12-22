@@ -30,7 +30,7 @@
                         </tr>
                         </thead>
                         <tbody>                 <!------Expense_Insert_Table(Top_Left)--------->
-                        <tr v-for="(card,index) in cards" :key="card.id">       <!-------pos_table---------3----->
+                        <tr v-for="(card,index) in cards" :key="card.id">       <!-------pos_table-----3----->
                             <td> {{index+1}} </td>
                             <th>{{ card.product_name }}</th>
                             <td><input type="number" min="1" style="width: 40px;" v-model="card.product_quantity" required>
@@ -102,13 +102,14 @@
 
                 <div class="card-body">             <!----------------------------->
                     <div class="mb-5 pb-5 mt-2">
-                        <vue-suggestion :items="items"
+                        <vue-suggestion
+                                :items="items"
                                 v-model="item"
                                 :setLabel="setLabel"
                                 :itemTemplate="itemTemplate"
                                 @changed="inputChange"
-                                @selected="itemSelected">
-                        </vue-suggestion>
+                                @selected="itemSelected"
+                        ></vue-suggestion>
 
                         <!-- <div v-if="item && item.id">
                             <p>Selected item:</p>
@@ -127,25 +128,26 @@
 import itemTemplate from './item-template.vue';
     export default {
         created(){
-            this.newAllProduct();           //----------------------------------//------
+            this.newAllProduct();
         },
         data(){
             return{
                 pay:'',
                 discount:'',
                 payby:'',
-                cards:[],                   //--------2.2--
+                cards:[],
 
-                item: {},   //-----------------------------------------------------//----
+                item: {},
                 items: [],
                 itemTemplate,
+                allProduct: null,
             }
         },
         computed:{
             totalQuantity(){
                 let sum=0;
                 for(let i=0; i < this.cards.length; i++ ){
-                    sum += (parseFloat(this.cards[i].product_quantity));
+                    sum += parseFloat(this.cards[i].product_quantity);
                 }
                 return sum;
             },
@@ -159,9 +161,9 @@ import itemTemplate from './item-template.vue';
             },
         },
         methods:{
-            newAllProduct(){                               //---------------------------//------------
+            newAllProduct(){
                 axios.get('/product')
-                    .then(({data}) => (this.items = data))
+                    .then(({data}) => (this.allProduct = data))
                     .catch()
             },
             itemSelected (item) {
@@ -174,10 +176,7 @@ import itemTemplate from './item-template.vue';
             inputChange (text) {
                 // your search method
                 // this.items = items.filter(item => item.product_name.contains(text));
-
-                this.items = this.items.filter(item => (new RegExp(text.toLowerCase())).test(item.product_name.toLowerCase()));
-
-                // this.newAllProduct();
+                this.items = this.allProduct.filter(item => (new RegExp(text.toLowerCase())).test(item.product_name.toLowerCase()));
                 // now `items` will be showed in the suggestion list
             },
             removeProduct(index){

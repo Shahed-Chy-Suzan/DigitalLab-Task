@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 22, 2020 at 03:31 PM
+-- Generation Time: Dec 22, 2020 at 10:02 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -21,31 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `digitallab`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `customers`
---
-
-CREATE TABLE `customers` (
-  `id` bigint(111) NOT NULL,
-  `name` varchar(111) NOT NULL,
-  `phone` int(111) NOT NULL,
-  `email` varchar(121) NOT NULL,
-  `address` varchar(121) NOT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `customers`
---
-
-INSERT INTO `customers` (`id`, `name`, `phone`, `email`, `address`, `created_at`, `updated_at`) VALUES
-(1, 'sajjad hossen', 1815406312, 'sajjad@gmail.com', 'kadalpur, raozan, chattogram', '2020-12-12 19:24:35', '2020-12-12 19:24:35'),
-(2, 'jahedul islam', 1815406313, 'jahed@gmail.com', 'muradpur, chattogram', '2020-12-12 19:24:35', '2020-12-12 19:24:35'),
-(3, 'Arman alam', 1815406314, 'arman@gmail.com', 'Dhanmondi 10, Dhaka', '2020-12-12 19:24:35', '2020-12-12 19:24:35');
 
 -- --------------------------------------------------------
 
@@ -75,7 +50,6 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `orders` (
   `id` bigint(121) NOT NULL,
-  `customer_id` int(121) DEFAULT NULL,
   `qty` int(111) NOT NULL,
   `sub_total` varchar(121) NOT NULL,
   `discount` varchar(121) DEFAULT NULL,
@@ -94,11 +68,9 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `customer_id`, `qty`, `sub_total`, `discount`, `total`, `deposit`, `due`, `pay_by`, `month`, `year`, `date`, `created_at`, `updated_at`) VALUES
-(19, NULL, 4, '16050', '6', '15087', '10000', '5087.00', 'HandCash', 'December', '2020', '13/12/2020', '2020-12-13 19:59:27', '2020-12-13 19:59:27'),
-(23, NULL, 7, '2000', '10', '1800', '800', '1000.00', 'HandCash', 'December', '2020', '22/12/2020', '2020-12-22 11:14:29', '2020-12-22 11:14:29'),
-(24, NULL, 4, '1900', '10', '1710', '10', '1700.00', 'GiftCard', 'December', '2020', '22/12/2020', '2020-12-22 12:46:19', '2020-12-22 12:46:19'),
-(25, NULL, 3, '26400', '10', '23760', '3333', '20427.00', 'Cheaque', 'December', '2020', '22/12/2020', '2020-12-22 12:54:52', '2020-12-22 12:54:52');
+INSERT INTO `orders` (`id`, `qty`, `sub_total`, `discount`, `total`, `deposit`, `due`, `pay_by`, `month`, `year`, `date`, `created_at`, `updated_at`) VALUES
+(28, 2, '16000', '20', '12800', '800', '12000.00', 'HandCash', 'December', '2020', '22/12/2020', '2020-12-22 15:19:23', '2020-12-22 15:19:23'),
+(29, 11, '7000', '10', '6300', '300', '6000.00', 'HandCash', 'December', '2020', '22/12/2020', '2020-12-22 20:46:01', '2020-12-22 20:46:01');
 
 -- --------------------------------------------------------
 
@@ -191,12 +163,6 @@ CREATE TABLE `users` (
 --
 
 --
--- Indexes for table `customers`
---
-ALTER TABLE `customers`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -238,12 +204,6 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `customers`
---
-ALTER TABLE `customers`
-  MODIFY `id` bigint(111) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -253,7 +213,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(121) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint(121) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `pos`

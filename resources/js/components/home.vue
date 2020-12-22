@@ -10,7 +10,7 @@
             <h1 class="display-4 font-weight-bolder text-primary shadow-sm">DigitalLab</h1><br>
             <p class="text-danger">Total ICT Solution</p>
         </div>
-        
+
         <vue-suggestion :items="items"
                         v-model="item"
                         :setLabel="setLabel"
@@ -35,14 +35,7 @@ export default {
   data () {
     return {
       item: {},
-      items: [
-        // { id: 1, name: 'Golden Retriever'},
-        // { id: 2, name: 'Cat'},
-        // { id: 3, name: 'Squirrel'},
-        // { id: 4, name: 'aaaaaa'},
-        // { id: 5, name: 'a'},
-        // { id: 6, name: 'aa'},
-      ],
+      items: [],
       itemTemplate,
     }
   },
