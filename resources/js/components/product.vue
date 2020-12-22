@@ -172,7 +172,7 @@
         computed:{
             filtersearch(){                          //----------------1.3-------
                 return this.products.filter(product => {
-                    return product.product_name.match(this.searchTerm)
+                    return product.product_name.toLowerCase().match(this.searchTerm.toLowerCase())
                 })
             },
             qty(){

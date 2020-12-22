@@ -2637,7 +2637,7 @@ __webpack_require__.r(__webpack_exports__);
 
       //----------------1.3-------
       return this.products.filter(function (product) {
-        return product.product_name.match(_this2.searchTerm);
+        return product.product_name.toLowerCase().match(_this2.searchTerm.toLowerCase());
       });
     },
     qty: function qty() {
@@ -58004,8 +58004,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_suggestion__WEBPACK_IMPORTED_
 
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
-  routes: _routes__WEBPACK_IMPORTED_MODULE_3__["routes"],
-  mode: 'history'
+  routes: _routes__WEBPACK_IMPORTED_MODULE_3__["routes"] // mode: 'history'
+
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',

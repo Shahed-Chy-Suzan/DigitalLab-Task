@@ -7,11 +7,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/{anypath}','CartController@index')->where('path','.*');
-
 // Route::get('/{vue_capture?}',function () {	//here,"vue_capture" is jst a random_variable
 //     return view('welcome'); 	//if we hit with random route,it will go 'welcome' page
 // })->where('vue_capture', '[\/\w\.-]*');
+
+
 
 Route::get('/product','ProductController@index');               //--Product
 Route::get('/addTocart/{id}','CartController@AddToCart');       //--Cart
