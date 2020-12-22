@@ -2092,7 +2092,7 @@ __webpack_require__.r(__webpack_exports__);
     inputChange: function inputChange(text) {
       // your search method
       // this.items = items.filter(item => item.product_name.contains(text));
-      this.items = items.filter(function (item) {
+      this.items = this.items.filter(function (item) {
         return new RegExp(text.toLowerCase()).test(item.product_name.toLowerCase());
       }); // this.newAllProduct();
       // now `items` will be showed in the suggestion list

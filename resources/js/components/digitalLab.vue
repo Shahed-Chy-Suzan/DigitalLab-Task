@@ -175,7 +175,7 @@ import itemTemplate from './item-template.vue';
                 // your search method
                 // this.items = items.filter(item => item.product_name.contains(text));
 
-                this.items = items.filter(item => (new RegExp(text.toLowerCase())).test(item.product_name.toLowerCase()));
+                this.items = this.items.filter(item => (new RegExp(text.toLowerCase())).test(item.product_name.toLowerCase()));
 
                 // this.newAllProduct();
                 // now `items` will be showed in the suggestion list
