@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 19, 2020 at 07:40 AM
+-- Generation Time: Dec 22, 2020 at 03:31 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -78,7 +78,6 @@ CREATE TABLE `orders` (
   `customer_id` int(121) DEFAULT NULL,
   `qty` int(111) NOT NULL,
   `sub_total` varchar(121) NOT NULL,
-  `vat` int(121) DEFAULT NULL,
   `discount` varchar(121) DEFAULT NULL,
   `total` varchar(121) NOT NULL,
   `deposit` varchar(121) NOT NULL,
@@ -95,11 +94,11 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `customer_id`, `qty`, `sub_total`, `vat`, `discount`, `total`, `deposit`, `due`, `pay_by`, `month`, `year`, `date`, `created_at`, `updated_at`) VALUES
-(19, NULL, 4, '16050', NULL, '6', '15087', '10000', '5087.00', 'HandCash', 'December', '2020', '13/12/2020', '2020-12-13 19:59:27', '2020-12-13 19:59:27'),
-(20, NULL, 2, '30000', NULL, '8', '27600', '7600', '20000.00', 'HandCash', 'December', '2020', '15/12/2020', '2020-12-15 05:28:37', '2020-12-15 05:28:37'),
-(21, NULL, 4, '60000', NULL, '1', '59400', '59000', '400.00', 'Cheaque', 'December', '2020', '15/12/2020', '2020-12-15 06:39:18', '2020-12-15 06:39:18'),
-(22, NULL, 2, '900', NULL, '9', '819', '800', '19.00', 'GiftCard', 'December', '2020', '15/12/2020', '2020-12-15 09:41:41', '2020-12-15 09:41:41');
+INSERT INTO `orders` (`id`, `customer_id`, `qty`, `sub_total`, `discount`, `total`, `deposit`, `due`, `pay_by`, `month`, `year`, `date`, `created_at`, `updated_at`) VALUES
+(19, NULL, 4, '16050', '6', '15087', '10000', '5087.00', 'HandCash', 'December', '2020', '13/12/2020', '2020-12-13 19:59:27', '2020-12-13 19:59:27'),
+(23, NULL, 7, '2000', '10', '1800', '800', '1000.00', 'HandCash', 'December', '2020', '22/12/2020', '2020-12-22 11:14:29', '2020-12-22 11:14:29'),
+(24, NULL, 4, '1900', '10', '1710', '10', '1700.00', 'GiftCard', 'December', '2020', '22/12/2020', '2020-12-22 12:46:19', '2020-12-22 12:46:19'),
+(25, NULL, 3, '26400', '10', '23760', '3333', '20427.00', 'Cheaque', 'December', '2020', '22/12/2020', '2020-12-22 12:54:52', '2020-12-22 12:54:52');
 
 -- --------------------------------------------------------
 
@@ -129,6 +128,14 @@ CREATE TABLE `pos` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pos`
+--
+
+INSERT INTO `pos` (`id`, `pro_id`, `pro_name`, `pro_quantity`, `product_price`, `sub_total`, `created_at`, `updated_at`) VALUES
+(30, 6, 'Keyboard', '3', '600', '1800', '2020-12-22 08:03:50', '2020-12-22 08:03:50'),
+(31, 5, 'Mouse', '3', '400', '1200', '2020-12-22 08:03:52', '2020-12-22 08:03:52');
 
 -- --------------------------------------------------------
 
@@ -246,13 +253,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(121) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(121) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `pos`
 --
 ALTER TABLE `pos`
-  MODIFY `id` bigint(121) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(121) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `products`

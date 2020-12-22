@@ -6,3 +6,21 @@
 
 //-- https://vuejsexamples.com/suggestion-list-input-for-vue-js/
 //-- https://github.com/iamstevendao/vue-suggestion
+
+
+-----------------------------------------------------------------------------------
+Reload.$on('AfterAdd', ()=>{        //--------3.2--
+	this.newAllProduct();
+});
+
+// Reload.$emit('AfterAdd');
+---------------------------------------------------------------------------------
+
+this.items = this.items.filter(item => (new RegExp(text.toLowerCase())).test(item.product_name.toLowerCase()));
+
+
+
+
+
+
+
