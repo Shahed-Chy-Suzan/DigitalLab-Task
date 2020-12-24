@@ -24,5 +24,8 @@ Route::get('/remove/cart/{id}','CartController@removeCart');
 Route::get('/increment/{id}','CartController@Increment');
 Route::get('/decrement/{id}','CartController@Decrement');
 
+// Route::get('/loop','ProductController@loop')->name('loop');
+
+
 
 

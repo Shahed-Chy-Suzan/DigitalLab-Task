@@ -111,9 +111,9 @@
                                 @selected="itemSelected"
                         ></vue-suggestion>
 
-                        <!-- <div v-if="item && item.id">
+                        <!-- <div>
                             <p>Selected item:</p>
-                            <code>{{ item }}</code>
+                            <code>{{ items }}</code>
                         </div> -->
                     </div>
                 </div>
@@ -176,6 +176,7 @@ import itemTemplate from './item-template.vue';
             inputChange (text) {
                 // your search method
                 // this.items = items.filter(item => item.product_name.contains(text));
+                //this.items = this.allProduct.filter(item => (new RegExp(text.toLowerCase())).test(item.name_category.toLowerCase()));
                 this.items = this.allProduct.filter(item => (new RegExp(text.toLowerCase())).test(item.product_name.toLowerCase()));
                 // now `items` will be showed in the suggestion list
             },

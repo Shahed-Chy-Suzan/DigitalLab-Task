@@ -3,10 +3,12 @@
 (2) item = {} --->> storing product info here after seleteing a product by searching--->>code is in "itemSelected (item) in methods"
 (3) cards = [] --->> all selected products are pushing here to display on the left side table(Expense Details table).
 
+//------------AutoSuggestion/AutoComplete package-----------------
+		//-- https://vuejsexamples.com/suggestion-list-input-for-vue-js/
+		//-- https://github.com/iamstevendao/vue-suggestion
 
-//-- https://vuejsexamples.com/suggestion-list-input-for-vue-js/
-//-- https://github.com/iamstevendao/vue-suggestion
-
+//------------Print Invoice(using JavaScript)----------------------------
+		//-- https://www.youtube.com/watch?v=oAASCVRuseI&list=PLB4AdipoHpxaHDLIaMdtro1eXnQtl_UvE&index=53&t=1s
 
 
 

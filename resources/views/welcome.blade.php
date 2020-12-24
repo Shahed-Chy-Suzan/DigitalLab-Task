@@ -73,6 +73,12 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Invoice
                             </router-link>
+                    <!--------------loop----------->
+                            {{-- <router-link class="nav-link collapsed" to="/loop">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Loop
+                            </router-link>
+                            <a href="{{route('loop')}}">loopButton</a> --}}
 
                         </div>
                     </div>
