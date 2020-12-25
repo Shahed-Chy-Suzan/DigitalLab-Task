@@ -27,18 +27,18 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
-    // public function loop(){
-    //     $data= array();
-    //     for ($i=0; $i <100000 ; $i++) {
-    //         $data['ref_category_id']= "1";
-    //         $data['product_name']= "name";
-    //         $data['product_price']= "price";
-    //         $data['product_quantity']= "1";
+    public function loop(){
+        $data= array();
+        for ($i=0; $i <100000 ; $i++) {
+            $data['ref_category_id']= "1";
+            $data['product_name']= "name";
+            $data['product_price']= "price";
+            $data['product_quantity']= "1";
 
-    //         DB::table('products')->insert($data);
-    //     }
-    //     return response('done');
-    // }
+            DB::table('products')->insert($data);
+        }
+        return response('done');
+    }
 
     // public function loop(){
         // for ($i=0; $i < 100000; $i++) {
